@@ -1,0 +1,73 @@
+<canvas id='canvas' width=400 height=300>
+<script>
+
+	function polygon(a, colorBorde, colorRelleno) {
+            ctx.beginPath()
+            ctx.strokeStyle = colorBorde
+            ctx.fillStyle = colorRelleno
+            ctx.moveTo(a[0], a[1])
+            for (var i = 2; i < a.length; i += 2)
+                ctx.lineTo(a[i], a[i + 1]);
+            ctx.closePath()
+            ctx.stroke()
+            ctx.fill()
+        }
+
+            
+	function centroGeom(coordenada) {
+            tr = [0, 0]
+
+            return tr;
+        }
+
+	function SumaT(a,b){
+	var c = [];
+	for (i=0; i < a.length; i+=2){
+	c[i]=(a[i]+b[0])
+	c[i+1]=(a[i+1]+b[1])
+    }
+	return c;
+}
+	function RestaT(a,b){
+	var c = [];
+	for (i=0; i < a.length; i+=2){
+	c[i]=(a[i]-b[0])
+	c[i+1]=(a[i+1]-b[1])
+    }
+	return c;
+}
+
+	function rotarobj(a,r){  ///rotacion de las coordenadas
+	var c = [];
+	var m= [Math.cos(r), -Math.sin(r),Math.sin(r), Math.cos(r)]
+	for (i=0; i < a.length; i+=2){
+	c[i]=(a[i]*m[0]+a[i+1]*m[1])
+	c[i+1]=(a[i]*m[2]+a[i+1]*m[3])
+    }
+	return c;
+}
+
+	var canvas = document.getElementById('canvas')
+	var ctx = canvas.getContext('2d');
+	
+	var LetraE=
+    [55,94 ,55,79 ,9,80, 6,115, 38,123, 38,138, 8,137, 9,153, 59,149 ,59,113, 36,110, 35,93];  ///coordenadas del objeto
+
+	var rot = 75;
+          ctx.rotate(-4/48*Math.PI)  //ctx.rotate(75);
+
+	var vec_tran = [250,50];// retorno de la figura al punto inicialvar vec_tran = [250,50];
+
+	var LetraE_centr = RestaT(LetraE, vec_tran)
+
+	var LetraE_rot_cent = rotarobj(LetraE_centr, rot)
+
+	var LetraE_rot = SumaT(LetraE_rot_cent, vec_tran)
+	
+	polygon(LetraE, 'red','yellow', 5)
+	
+	polygon(LetraE_rot, 'yellow','red', 5)
+    vt = centroGeom(coord);    // calcular el vecor de traslacion [x, y]
+        ctx.translate(-vt[0], -vt[1]);   // ubicacion centro de la figura en el origen de coordenadas
+
+</script>
